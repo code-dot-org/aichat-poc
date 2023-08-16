@@ -1,3 +1,5 @@
+This is **purely** for internal use only and will go away soon. Don't read anything into it or make any assumptions.
+
 So, first of all - the code. As I've said a few times, this is a lot of fast iteration. So if something looks sloppy or incorrectly implemented, it probably is! If something seems like it might be right, please just ping me and ask - I'll let you know if it's clever or a hack. :-)
 
 No types either.
