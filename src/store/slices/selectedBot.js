@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const initialState = { selectedBot: {"William Shakespeare"} };
+const initialState = { selectedBot: "" };
 
 export const select = createAsyncThunk(
   "selectedBot/select",

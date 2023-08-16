@@ -10,8 +10,6 @@ export async function GET(req, { params }) {
     return NextResponse.json({ msg: "forbidden" });
   }
 
-  console.log(params.name);
-
   const classroomsCollection = await getClassroomsCollection();
   const search = { name: params.name };
   if (usertype === "teacher") {

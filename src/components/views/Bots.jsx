@@ -4,12 +4,17 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 
-import { useGetBotsQuery } from "@/store/services";
+import { useGetBotsQuery, useSelectBotQuery } from "@/store/services";
 import { select as selectBot } from "@/store/slices/selectedBot";
 
 const Bots = () => {
   const { data: bots = [], error, isLoading } = useGetBotsQuery();
   const selectedBot = useSelector(({ selectedBot }) => selectedBot);
+
+  const dispatch = useDispatch();
+  if (!selectedBot.name) {
+    dispatch(selectBot("William Shakespeare"));
+  }
 
   const handleChange = (e) => dispatch(selectBot(e.target.value));
 

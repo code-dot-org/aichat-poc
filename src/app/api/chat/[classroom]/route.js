@@ -28,6 +28,6 @@ export async function GET(req, { params }) {
   };
 
   const chats = await chatsCollection.find(search).toArray();
-  console.log("SC : ", search, chats);
+
   return NextResponse.json(chats);
 }
