@@ -22,6 +22,12 @@ import {
 
 import { selectStudent } from "@/store/slices/selectedStudent";
 
+// this may not scale well. Does a lot of rtk queries with polling intervals.
+// maybe it'd be better to adjust the duration or return a different structure from
+// the server or...?
+
+const POLLING_INTERVAL = 3000;
+
 const Students = ({ selectStudentCallback = () => {} }) => {
   const dispatch = useDispatch();
   const [updateRestrictions] = useUpdateRestrictionsMutation();
@@ -33,11 +39,11 @@ const Students = ({ selectStudentCallback = () => {} }) => {
 
   const { data: restrictions = [] } = useGetRestrictionsQuery(
     selectedClassroom,
-    { pollingInterval: 3000 }
+    { pollingInterval: POLLING_INTERVAL }
   );
 
   const { data: chats = [] } = useGetChatsQuery(selectedClassroom, {
-    pollingInterval: 3000,
+    pollingInterval: POLLING_INTERVAL,
   });
 
   const chatsByStudent = chats.reduce((bucket, chat) => {

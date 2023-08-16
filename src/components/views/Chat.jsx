@@ -15,11 +15,17 @@ const Chat = () => {
   const classroom = useSelector((state) => state.selectedClassroom);
   const chat = useSelector((state) => state.chat);
   const [msg, setMsg] = useState("");
+
   const sendChatMsg = async () => {
+    // adds the message to internal state first. This'll add the "typing" placeholder as well
     await dispatch(addMessage(msg));
+
+    // sends the message to the server for proper processing. We can probably leverage the loading
+    // state to skip the addMessage step.
     await dispatch(
       message({ message: msg, classroom, bot: bot.name, chat_id: chat.chat_id })
     );
+    // and sets our local message back to blank
     setMsg("");
   };
 

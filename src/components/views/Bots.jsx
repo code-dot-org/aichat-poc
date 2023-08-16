@@ -11,11 +11,6 @@ const Bots = () => {
   const { data: bots = [], error, isLoading } = useGetBotsQuery();
   const selectedBot = useSelector(({ selectedBot }) => selectedBot);
 
-  const dispatch = useDispatch();
-  if (!selectedBot.name) {
-    dispatch(selectBot("William Shakespeare"));
-  }
-
   const handleChange = (e) => dispatch(selectBot(e.target.value));
 
   return (

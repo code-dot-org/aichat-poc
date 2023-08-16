@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+So, first of all - the code. As I've said a few times, this is a lot of fast iteration. So if something looks sloppy or incorrectly implemented, it probably is! If something seems like it might be right, please just ping me and ask - I'll let you know if it's clever or a hack. :-)
 
-## Getting Started
+No types either.
 
-First, run the development server:
+redux is in the store library, and it's roughed out modern reduxjs-toolkit.
 
-```bash
+components has the react bits, and the app route is page.js outside of components.
+
+the api directory has all of the backend api routes, which are probably not super useful going forward since it'd take effort to port those to RoR and change the storage away from mongo. But maybe it's worth reading through. The FE just hits rest end points through rtk query so it doesn't really care how it's implemented only how the IO is formatted.
+
+login is just with a user name, no password. POC.
+
+setup isn't awful. it's a next.js app so startup is standard:
+
+```
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+That'll start it on `http://localhost:3001`
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+But...you also need a mongodb instance running.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+In the root, copy `env.default` to `.env.local` and fill in the values.
 
-## Learn More
+Most important things you'll need are the `MONGO_USER` and `MONGO_PASS`, as well as completing the rest of the `MONGO_URL`.
 
-To learn more about Next.js, take a look at the following resources:
+You can run mongo locally or just set up a free account on atlas @ https://www.mongodb.com. The free tier is perfectly fine for these purposes, and then it'll give you the connection params to fill in the environment variables. Presumably we won't use mongo when we go live, it was just fast and easy to work with for POC purposes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`AICHAT_KEY` is the key from your openai account, so set up a token there and snag it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Finally, you'll need to populate some data. There are two scripts in the data_generators folder - one will populate a bunch of random users and the second will populate a bunch of random classrooms. The names are all made up (I found a random name generator), so you can keep them or swap in something else.
 
-## Deploy on Vercel
+Those scripts will just spit out a bunch of curl commands. So you can start up the server with `npm run dev`, then run the scripts to generate the curl commands and paste them into a terminal and it'll populate the data for you. Just make sure mongo is up first, and otherwise there are no security concerns for it. If you deploy this app elsewhere, you'd need to lock things down first - at a minimum in the `user/route.js` file, uncomment the lines that require a logged in admin session to create new users.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+On the running app, just hit the login button in the upper right and type in one of the user names to interact.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+As a student, you can choose a bot and chat. As a teacher, you can choose a classroom, see the chats that are active (most recent chat), and unlock a locked student who submitted something they shouldn't have.
+
+Also, honestly, if it's too much of a headache getting it running locally and you want to try it out, I'll re-configure it to deploy to my personal vercel account so it's available that way.
